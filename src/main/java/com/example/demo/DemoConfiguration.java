@@ -10,9 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class DemoConfiguration extends WebSecurityConfigurerAdapter {
 
-    public static final String ROLE_READ = "READ";
-    public static final String ROLE_WRITE = "WRITE";
-
     @Bean
     public PasswordEncoder encoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -25,15 +22,15 @@ public class DemoConfiguration extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("Sergey")
                 .password(encoder().encode("Password_1"))
-                .roles(ROLE_READ, ROLE_WRITE)
+                .roles("READ", "WRITE", "DELETE")
                 .and()
                 .withUser("Elena")
                 .password(encoder().encode("qwerty"))
-                .roles(ROLE_READ)
+                .roles("READ")
                 .and()
                 .withUser("Polina")
                 .password("{noop}bluetractor")
-                .authorities("WRITE");
+                .roles("DELETE");
 
     }
 
